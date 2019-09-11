@@ -11,11 +11,19 @@ export const SERVICES_LIST = "SERVICES_LIST";
 export const REGISTER_USER = "REGISTER_USER";
 export const TOKEN_SETTER = "TOKEN_SETTER";
 export const NEW_USER = "NEW_USER";
+export const NEW_MESSAGE = "NEW_MESSAGE";
 
 export const newUserRegister = (status) => dispatch => {
   dispatch({
       type: REGISTER_USER,
       data: status
+    })
+}
+
+export const addMessagesToStore = (msg) => dispatch => {
+  dispatch({
+      type: NEW_MESSAGE,
+      msg
     })
 }
 export const alterLoginStatus = (status) => dispatch => {

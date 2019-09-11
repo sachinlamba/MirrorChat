@@ -7,12 +7,10 @@ export default {
   ],
   "messageList": {
     "abc": [
-      {"status": "connected"},
       {"by": "abc", "time": "2019-09-11:08:21AM", "content": "Whats up ?", "type": "text"},
       {"by": "echo-bot", "time": "2019-09-11:08:22AM", "content": "Whats up ?", "type": "text"},
       {"by": "abc", "time": "2019-09-11:10:20AM", "content": "Good!!!!", "type": "text"},
       {"by": "echo-bot", "time": "2019-09-11:10:20AM", "content": "Good!!!!", "type": "text"},
-      {"status": "disconnected"},
     ]
   },
   "userDetails": {},
