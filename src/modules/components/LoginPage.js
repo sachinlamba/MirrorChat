@@ -13,30 +13,18 @@ class LoginPage extends Component {
     }
    }
    loginVerify(){
-     fetch(urls.authenticate, {
-       method: 'POST',
-       headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({"username": this.state.username, "password": this.state.password})
-     })
-     .then((response) => {
-       return response.json();
-     })
-     .then((data) => {
-       console.log("Login status data: " , data);
-       if(data.status === 500){
-         this.props.alterLoginStatus(false);
-         // this.props.wrongCredentails(data.message);
-       }else{
+     let loginStatus = false;
+     let checkUserDetails = this.props.allUsersList.forEach(u => {
+       if(u.username == this.state.username && u.password == this.state.password){
+         loginStatus = true;
          this.props.alterLoginStatus(true);
-         this.props.loggedInUser(data);
+         this.props.loggedInUser({"username": this.state.username, "password": this.state.password});
          this.props.tokenSetter(this.state.username + ":" + this.state.password);
        }
-
      })
-     .catch(error => this.setState({ error }));
+     if(!loginStatus){
+       this.setState({ error: "Wrong UserName or Password!!!" })
+     }
    }
 
    validateForm() {
@@ -84,18 +72,13 @@ class LoginPage extends Component {
             Login
           </Button>
         </form>
-
-         <h2>Available Services: </h2>
-         {
-           this.props.serviceList.map(service => <div>{service.name}</div>)
-         }
        </div>
      );
    }
 }
 
 const mapStateToProps = state => ({
-  serviceList: state.userServiceReducer.serviceList,
+  allUsersList: state.userServiceReducer.allUsersList,
 })
 
 const mapDispatchToProps = dispatch => (

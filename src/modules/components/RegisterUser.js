@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import { alterLoginStatus, loggedInUser, newUserRegister } from '../actions/allAction';
+import { alterLoginStatus, loggedInUser, newUserRegister, newUserDetails } from '../actions/allAction';
 import urls from '../constants/AppContants';
 import { Button, FormGroup, FormControl, FormLabel } from "react-bootstrap";
 
@@ -37,23 +37,9 @@ class RegisterUser extends Component {
          errorMsg: ""
        })
      }
-     fetch(urls.users, {
-       method: 'POST',
-       headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({"username": this.state.username, "password": this.state.password})
-     })
-     .then((data) => {
-       console.log("Register request status: " , data);
-       if(data.status === 200){
-         this.props.newUserRegister(false);
-       }else{
-         this.setState({error: data.message})
-       }
-     })
-     .catch(error => this.setState({ error }));
+
+     this.props.newUserDetails({"username": this.state.username, "password": this.state.password});
+     this.props.newUserRegister(false);
 
    }
    handleSubmit = event => {
@@ -104,7 +90,6 @@ class RegisterUser extends Component {
 }
 
 const mapStateToProps = state => ({
-  serviceList: state.userServiceReducer.serviceList,
   userDetails: state.userServiceReducer.userDetails,
   username: state.userServiceReducer.userDetails.username,
   subscribedList: state.userServiceReducer.userDetails.subscribes || [],
@@ -115,6 +100,7 @@ const mapDispatchToProps = dispatch => (
     alterLoginStatus: (status) => dispatch(alterLoginStatus(status)),
     loggedInUser: (user) => dispatch(loggedInUser(user)),
     newUserRegister: (status) => dispatch(newUserRegister(status)),
+    newUserDetails: (user) => dispatch(newUserDetails(user)),
 
   }
 )

@@ -10,6 +10,7 @@ export const LOGIN_USER = "LOGIN_USER";
 export const SERVICES_LIST = "SERVICES_LIST";
 export const REGISTER_USER = "REGISTER_USER";
 export const TOKEN_SETTER = "TOKEN_SETTER";
+export const NEW_USER = "NEW_USER";
 
 export const newUserRegister = (status) => dispatch => {
   dispatch({
@@ -30,6 +31,12 @@ export const allServicesFetch = (data) => dispatch => {
     })
 }
 
+export const newUserDetails = (newUser) => dispatch => {
+  dispatch({
+      type: NEW_USER,
+      user: newUser
+    })
+}
 export const loggedInUser = (user) => dispatch => {
   dispatch({
       type: LOGIN_USER,

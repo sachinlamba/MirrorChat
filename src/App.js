@@ -10,23 +10,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 import { Button } from "react-bootstrap";
 
 class App extends Component {
-  componentDidMount(){
-    this.serviceListFetch();
-  }
-
-  serviceListFetch(){
-    fetch(urls.allServices)
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Available services: " , data);
-      this.props.allServicesFetch(data)
-
-    })
-    .catch(error => this.setState({ error }));
-  }
-
   studentSelection = (event) => {
     this.props.studentSelection();
   }
@@ -35,14 +18,18 @@ class App extends Component {
   }
 
   render() {
+    debugger
     return (
       <div className = "App" >
         <header className = "App-header" >
-          <h1 className = "App-title" > Welcome to Online Service Subscriber < /h1>
+          <h1 className = "App-title" > Welcome to Mirror Chat Bot < /h1>
         </header>
 
         {
-          !this.props.register ? (this.props.loginStatus ? <UserPage /> : <LoginPage />) : ""
+          (!this.props.register && !this.props.loginStatus) ? <LoginPage /> : <span></span>
+        }
+        {
+          (!this.props.register && this.props.loginStatus) ? <UserPage /> : <span></span>
         }
 
         {
