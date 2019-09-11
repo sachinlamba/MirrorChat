@@ -16,11 +16,14 @@ class MirrorChatBot extends React.Component {
   	this.connection = new WebSocket('wss://echo.websocket.org');
     this.connection.onmessage = evt => {
 			let data = JSON.parse(evt.data)
-			let msg = {
+			let msg = [{
+				username:this.props.userDetails.username, "by": this.props.userDetails.username, "time": new Date(), "content": this.state.message.content, "type": "text"
+			},{
 				username:this.props.userDetails.username, "by": "echo-bot", "time": new Date(), "content": data.content, "type": "text"
-			}
+			}]
+			let messages = this.state.messages.concat( msg )
     	this.setState({
-      	messages : this.state.messages.concat([ msg ]),
+      	messages,
 				message: {content: ""}
       })
 			this.props.addMessagesToStore(msg);
@@ -46,14 +49,14 @@ class MirrorChatBot extends React.Component {
     return <div>
 			<div>{ this.state.messages.map( (msg, i) => {
 				if(msg.by != this.props.userDetails.username){
-					return <div style={{color: "blue"}} key={'msg-' + i }>{ "Bot: " + msg.content }</div>
+					return <div style={{color: "blue", textAlign: "left", marginLeft: "30px", wordBreak: "break-word"}} key={'msg-' + i }>{ "Bot: " + msg.content }</div>
 				}
-				return <div style={{color: "black"}} key={'msg-' + i }>{ "You: " + msg.content }</div>
+				return <div style={{color: "black", textAlign: "right", marginRight: "30px", wordBreak: "break-word"}} key={'msg-' + i }>{ "You: " + msg.content }</div>
 			} )}</div>
 
-			<form onSubmit={this.handleSubmit}>
+			<form style={{"bottom": "0", "position": "fixed", "width": "100%", "background": "white", "border": "1px solid #ccc", "padding": "10px"}} onSubmit={this.handleSubmit}>
 				<FormGroup controlId="message" bsSize="large">
-					<FormLabel>Enter Message</FormLabel>
+					<FormLabel></FormLabel>
 					<FormControl
 						autoFocus
 						type="text"
